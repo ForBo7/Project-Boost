@@ -2,68 +2,70 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// Responsible for the movement of the rocket.
-/// </summary>
+
+// A class to manage the movement of the rocket.
 public class Movement : MonoBehaviour
 {
     [SerializeField] float thrustFactor;
 
     Rigidbody rb;
 
-    // Start is called before the first frame update
+    bool wPressed = false;
+    bool aPressed = false;
+    bool dPressed = false;
+
+    // Start is called before the first frame update.
     void Start()
     {
         InitializeComponents();
     }
 
-    // Update is called once per frame
+    // Update is called once per frame.
     void Update()
     {
         ProcessInput();
     }
 
+    // FixedUpdate is called every 0.02 seconds or 50 times a second.
+    void FixedUpdate()
+    {
+        ThrustRocket();
+        RotateRocket();
+    }
 
-    /// <summary>
-    /// Initalize the required components for <c>Movement</c>.
-    /// </summary>
+    // Initialize the components required for the class.
     void InitializeComponents()
     {
         rb = GetComponent<Rigidbody>();
     }
 
-    /// <summary>
-    /// Do the appropriate action upon input.
-    /// </summary>
+    // Identify which required keys have been pressed.
     void ProcessInput()
     {
-        ProcessThrustInput();
-        ProcessRotationInput();
+        wPressed = Input.GetKey(KeyCode.W);
+        aPressed = Input.GetKey(KeyCode.A);
+        dPressed = Input.GetKey(KeyCode.D);
     }
 
-    /// <summary>
-    /// Check for thrust input. If so, run the thrust code.
-    /// </summary>
-    void ProcessThrustInput()
+    // Thrust the rocket.
+    void ThrustRocket()
     {
-        if (Input.GetKey(KeyCode.W))
+        if (wPressed)
         {
             Debug.Log("pressed");
-            rb.AddRelativeForce(Vector3.up * thrustFactor * Time.deltaTime);
+            rb.AddRelativeForce(Vector3.up * thrustFactor);
         }
     }
 
-    /// <summary>
-    /// Check for rotation input. If so, run the rotation code.
-    /// </summary>
-    void ProcessRotationInput()
+    // Rotate the rocket.
+    void RotateRocket()
     {
         // && used so cannot rotate in both directions at the same time.
-        if (Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D))
+        if (aPressed && !dPressed)
         {
             Debug.Log("A pressed - Rotating left...");
         }
-        if (Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
+        if (dPressed && !aPressed)
         {
             Debug.Log("D pressed - Rotating right...");
         }
