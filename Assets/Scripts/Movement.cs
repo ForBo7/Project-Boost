@@ -7,16 +7,29 @@ using UnityEngine;
 /// </summary>
 public class Movement : MonoBehaviour
 {
+    [SerializeField] float thrustFactor;
+
+    Rigidbody rb;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        InitializeComponents();
     }
 
     // Update is called once per frame
     void Update()
     {
         ProcessInput();
+    }
+
+
+    /// <summary>
+    /// Initalize the required components for <c>Movement</c>.
+    /// </summary>
+    void InitializeComponents()
+    {
+        rb = GetComponent<Rigidbody>();
     }
 
     /// <summary>
@@ -35,7 +48,8 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W))
         {
-            Debug.Log("W pressed - Thrusting...");
+            Debug.Log("pressed");
+            rb.AddRelativeForce(Vector3.up * thrustFactor * Time.deltaTime);
         }
     }
 
