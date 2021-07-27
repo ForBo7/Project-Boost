@@ -6,41 +6,44 @@ using UnityEngine;
 // A class to manage the movement of the rocket.
 public class Movement : MonoBehaviour
 {
-    [SerializeField] float thrustFactor;
+    [SerializeField] float thrustFactor = 0;
+    [SerializeField] float rotationFactor = 0;
 
     Rigidbody rb;
+    Vector3 eulerAngleVelocity;
 
     bool wPressed = false;
     bool aPressed = false;
     bool dPressed = false;
 
     // Start is called before the first frame update.
-    void Start()
+    private void Start()
     {
         InitializeComponents();
     }
 
     // Update is called once per frame.
-    void Update()
+    private void Update()
     {
         ProcessInput();
     }
 
     // FixedUpdate is called every 0.02 seconds or 50 times a second.
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         ThrustRocket();
         RotateRocket();
     }
 
     // Initialize the components required for the class.
-    void InitializeComponents()
+    private void InitializeComponents()
     {
         rb = GetComponent<Rigidbody>();
+        eulerAngleVelocity = new Vector3(0, 0, rotationFactor);
     }
 
     // Identify which required keys have been pressed.
-    void ProcessInput()
+    private void ProcessInput()
     {
         wPressed = Input.GetKey(KeyCode.W);
         aPressed = Input.GetKey(KeyCode.A);
@@ -52,23 +55,31 @@ public class Movement : MonoBehaviour
     {
         if (wPressed)
         {
-            Debug.Log("pressed");
             rb.AddRelativeForce(Vector3.up * thrustFactor);
         }
     }
 
     // Rotate the rocket.
-    void RotateRocket()
+    private void RotateRocket()
     {
         // && used so cannot rotate in both directions at the same time.
         if (aPressed && !dPressed)
         {
-            Debug.Log("A pressed - Rotating left...");
+            ApplyRotation(1);
         }
         if (dPressed && !aPressed)
         {
-            Debug.Log("D pressed - Rotating right...");
+            ApplyRotation(-1);
         }
+    }
+
+    // Calculate and apply the required rotation. A rotationDirection of 1
+    //  indicates anticlockwise. -1 indicates clockwise.
+    private void ApplyRotation(int rotationDirection)
+    {
+        Quaternion deltaRotation = Quaternion.Euler(eulerAngleVelocity *
+                                                    rotationDirection);
+        rb.MoveRotation(rb.rotation * deltaRotation);
     }
 
 }
