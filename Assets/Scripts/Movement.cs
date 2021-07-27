@@ -77,9 +77,15 @@ public class Movement : MonoBehaviour
     //  indicates anticlockwise. -1 indicates clockwise.
     private void ApplyRotation(int rotationDirection)
     {
+        // Freezing rotation so we can manually rotate.
+        rb.freezeRotation = true;
         Quaternion deltaRotation = Quaternion.Euler(eulerAngleVelocity *
                                                     rotationDirection);
         rb.MoveRotation(rb.rotation * deltaRotation);
+        // Unfreezing rotation so physics system can act.
+        rb.constraints = RigidbodyConstraints.FreezeRotationX |
+                         RigidbodyConstraints.FreezeRotationY |
+                         RigidbodyConstraints.FreezePositionZ;
     }
 
 }
