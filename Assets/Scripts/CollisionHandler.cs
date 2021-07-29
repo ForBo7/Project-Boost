@@ -6,8 +6,11 @@ using UnityEngine.SceneManagement;
 // Handles the collisions of the rocket and loads scenes.
 public class CollisionHandler : MonoBehaviour
 {
+    // Time delay to load a level.
+    [SerializeField] float nextLevelDelay = 0f;
+
     // Get the current scene's index.
-    private int currentSceneIndex;
+    private int currentSceneIndex = 0;
 
     private void Start()
     {
@@ -19,7 +22,7 @@ public class CollisionHandler : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Finish"))
         {
-            LoadNextLevel();
+            BeginLoadSequence();
         }
         else if (collision.gameObject.CompareTag("Friendly"))
         {
@@ -27,7 +30,7 @@ public class CollisionHandler : MonoBehaviour
         }
         else
         {
-            ReloadScene();
+            BeginReloadSequence();
         }
     }
 
@@ -43,9 +46,29 @@ public class CollisionHandler : MonoBehaviour
         SceneManager.LoadScene(nextSceneIndex);
     }
 
+    // Disable rocket controls.
+    private void DisableMovement()
+    {
+        GetComponent<Movement>().enabled = false;
+    }
+
     // Get the current scene's index and reload the scene.
     private void ReloadScene()
     {
         SceneManager.LoadScene(currentSceneIndex);
+    }
+
+    // Perform the neccessary logic to reload a level.
+    private void BeginReloadSequence()
+    {
+        DisableMovement();
+        Invoke("ReloadScene", nextLevelDelay);
+    }
+
+    // Perform the neccessary logic to load a level.
+    private void BeginLoadSequence()
+    {
+        DisableMovement();
+        Invoke("LoadNextLevel", nextLevelDelay);
     }
 }

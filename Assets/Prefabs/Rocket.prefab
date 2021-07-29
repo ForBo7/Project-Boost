@@ -252,3 +252,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a7e994dbe3d403ca99a2bcddfa2cf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  nextLevelDelay: 1.5
