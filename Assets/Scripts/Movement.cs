@@ -94,4 +94,9 @@ public class Movement : MonoBehaviour
     {
         this.enabled = false;
     }
+
+    public void FreezePositionAndRotation()
+    {
+        rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+    }
 }

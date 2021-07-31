@@ -20,6 +20,7 @@ public class CollisionHandler : MonoBehaviour
         if (collision.gameObject.CompareTag("Finish"))
         {
             movement.DisableMovement();
+            movement.FreezePositionAndRotation();
             Invoke("LoadNextScene", sceneLoader.GetNextLevelDelay());
         }
         else if (collision.gameObject.CompareTag("Friendly"))
