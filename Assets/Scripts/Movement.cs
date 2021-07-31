@@ -90,4 +90,8 @@ public class Movement : MonoBehaviour
                          RigidbodyConstraints.FreezePositionZ;
     }
 
+    public void DisableMovement()
+    {
+        this.enabled = false;
+    }
 }

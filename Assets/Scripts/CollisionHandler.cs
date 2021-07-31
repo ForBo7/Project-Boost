@@ -6,15 +6,12 @@ using UnityEngine.SceneManagement;
 // Handles the collisions of the rocket and loads scenes.
 public class CollisionHandler : MonoBehaviour
 {
-    // Time delay to load a level.
-    [SerializeField] float nextLevelDelay = 0f;
-
-    // Get the current scene's index.
-    private int currentSceneIndex = 0;
+    SceneLoader sceneLoader = null;
+    Movement movement = null;
 
     private void Start()
     {
-        currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        InitializeComponents();
     }
 
     // Handles the collisions of the rocket.
@@ -22,53 +19,33 @@ public class CollisionHandler : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Finish"))
         {
-            BeginLoadSequence();
+            movement.DisableMovement();
+            Invoke("LoadNextScene", sceneLoader.GetNextLevelDelay());
         }
         else if (collision.gameObject.CompareTag("Friendly"))
         {
-            Debug.Log("Collided with a friendly GameObject!");
+            // Pass.
         }
         else
         {
-            BeginReloadSequence();
+            movement.DisableMovement();
+            Invoke("ReloadScene", sceneLoader.GetNextLevelDelay());
         }
     }
 
-    // Get the current scene's index and reload the scene.
-    private void LoadNextLevel()
+    private void InitializeComponents()
     {
-        int nextSceneIndex = currentSceneIndex + 1;
-        // Loop back to first level if at last level.
-        if (nextSceneIndex == SceneManager.sceneCountInBuildSettings)
-        {
-            nextSceneIndex = 0;
-        }
-        SceneManager.LoadScene(nextSceneIndex);
+        sceneLoader = GameObject.Find("Level Manager").GetComponent<SceneLoader>();
+        movement = GetComponent<Movement>();
     }
 
-    // Disable rocket controls.
-    private void DisableMovement()
+    private void LoadNextScene()
     {
-        GetComponent<Movement>().enabled = false;
+        sceneLoader.LoadNextScene();
     }
 
-    // Get the current scene's index and reload the scene.
     private void ReloadScene()
     {
-        SceneManager.LoadScene(currentSceneIndex);
-    }
-
-    // Perform the neccessary logic to reload a level.
-    private void BeginReloadSequence()
-    {
-        DisableMovement();
-        Invoke("ReloadScene", nextLevelDelay);
-    }
-
-    // Perform the neccessary logic to load a level.
-    private void BeginLoadSequence()
-    {
-        DisableMovement();
-        Invoke("LoadNextLevel", nextLevelDelay);
+        sceneLoader.ReloadScene();
     }
 }
