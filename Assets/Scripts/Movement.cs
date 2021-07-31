@@ -90,11 +90,13 @@ public class Movement : MonoBehaviour
                          RigidbodyConstraints.FreezePositionZ;
     }
 
+    // Disable movement for this rocket by disabling the script.
     public void DisableMovement()
     {
         this.enabled = false;
     }
 
+    // Freeze the position and rotation of the rocket.
     public void FreezePositionAndRotation()
     {
         rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;

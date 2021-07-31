@@ -9,16 +9,20 @@ public class SceneLoader : MonoBehaviour
 
     private int currentSceneIndex = 0;
 
+    // Start is called before the first frame update.
     private void Start()
     {
+        // Get the index of the current scene.
         currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
 
+    // Reload the current scene.
     public void ReloadScene()
     {
         SceneManager.LoadScene(currentSceneIndex);
     }
 
+    // Load the next scene.
     public void LoadNextScene()
     {
         int nextSceneIndex = currentSceneIndex + 1;
@@ -30,6 +34,7 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene(nextSceneIndex);
     }
 
+    // Returns the delay after which a scene loads or reloads.
     public float GetNextLevelDelay()
     {
         return nextLevelDelay;

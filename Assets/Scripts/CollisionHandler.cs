@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-// Handles the collisions of the rocket and loads scenes.
+// Handles the collisions of the rocket and calls the appropriate methods.
 public class CollisionHandler : MonoBehaviour
 {
     SceneLoader sceneLoader = null;
     Movement movement = null;
 
+    // Start is called before the first frame update.
     private void Start()
     {
         InitializeComponents();
@@ -34,17 +35,20 @@ public class CollisionHandler : MonoBehaviour
         }
     }
 
+    // Initialize the required components.
     private void InitializeComponents()
     {
         sceneLoader = GameObject.Find("Level Manager").GetComponent<SceneLoader>();
         movement = GetComponent<Movement>();
     }
 
+    // Call the method that loads the next scene.
     private void LoadNextScene()
     {
         sceneLoader.LoadNextScene();
     }
 
+    // Class the method the reloads the current scene.
     private void ReloadScene()
     {
         sceneLoader.ReloadScene();
