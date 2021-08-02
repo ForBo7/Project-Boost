@@ -10,8 +10,7 @@ public class CollisionHandler : MonoBehaviour
     Movement movement = null;
     RocketAudio rocketAudio = null;
 
-    bool hasCollided = false;
-    bool hasFinished = false;
+    bool transitioning = false;
 
     // Start is called before the first frame update.
     private void Start()
@@ -22,13 +21,14 @@ public class CollisionHandler : MonoBehaviour
     // Handles the collisions of the rocket.
     private void OnCollisionEnter(Collision collision)
     {
+        if (transitioning)
+        {
+            return;
+        }
+
         if (collision.gameObject.CompareTag("Finish"))
         {
-            hasFinished = true;
-            rocketAudio.PlayFinishSFX();
-            movement.DisableMovement();
-            movement.FreezePositionAndRotation();
-            Invoke("LoadNextScene", sceneLoader.GetNextLevelDelay());
+            ExecuteFinishSequence();
         }
         else if (collision.gameObject.CompareTag("Friendly"))
         {
@@ -36,11 +36,27 @@ public class CollisionHandler : MonoBehaviour
         }
         else
         {
-            hasCollided = true;
-            rocketAudio.PlayCollisionSFX();
-            movement.DisableMovement();
-            Invoke("ReloadScene", sceneLoader.GetNextLevelDelay());
+            ExecuteCollisionSequence();
         }
+    }
+
+    // The sequence of steps to execute upon collision.
+    private void ExecuteCollisionSequence()
+    {
+        rocketAudio.PlayCollisionSFX();
+        movement.DisableMovement();
+        transitioning = true;
+        Invoke("ReloadScene", sceneLoader.GetNextLevelDelay());
+    }
+
+    // The sequence of steps to execute upon finishing.
+    private void ExecuteFinishSequence()
+    {
+        rocketAudio.PlayFinishSFX();
+        movement.DisableMovement();
+        movement.FreezePositionAndRotation();
+        transitioning = true;
+        Invoke("LoadNextScene", sceneLoader.GetNextLevelDelay());
     }
 
     // Initialize the required components.
@@ -61,17 +77,5 @@ public class CollisionHandler : MonoBehaviour
     private void ReloadScene()
     {
         sceneLoader.ReloadScene();
-    }
-
-    // Returns whether the rocket has collided.
-    public bool GetHasCollided()
-    {
-        return hasCollided;
-    }
-
-    // Returns whether the rocket has reached the finish pad.
-    public bool GetHasFinished()
-    {
-        return hasFinished;
     }
 }
