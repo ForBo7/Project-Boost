@@ -4,9 +4,16 @@ using UnityEngine;
 
 public class RocketAudio : MonoBehaviour
 {
+    // TODO Make the collision handler call the methods to play the collision and finish sfx.
+    // TODO Make the movement script call the methods to play the thrust sfx.
+    [SerializeField] AudioClip thrustSFX;
+    [SerializeField] AudioClip collisionSFX;
+    [SerializeField] AudioClip levelFinishSFX;
+
     AudioSource audioSource;
 
-    bool wPressed = false;
+    Movement movement;
+    CollisionHandler collisionHandler;
 
     // Start is called before the first frame update.
     private void Start()
@@ -14,38 +21,39 @@ public class RocketAudio : MonoBehaviour
         InitializeComponents();
     }
 
-    // Update is called once per frame.
-    private void Update()
-    {
-        GetInput();
-        PlayThrustSFX();
-    }
-
     // Initialize the components required for the class.
     private void InitializeComponents()
     {
         audioSource = GetComponent<AudioSource>();
-    }
-
-    // Identify which required keys have been pressed.
-    private void GetInput()
-    {
-        wPressed = Input.GetKey(KeyCode.W);
+        movement = GetComponent<Movement>();
+        collisionHandler = GetComponent<CollisionHandler>();
     }
 
     // Play the thrust sfx while the correct key is pressed.
-    private void PlayThrustSFX()
+    public void PlayThrustSFX(bool wPressed)
     {
         if (wPressed)
         {
             if (!audioSource.isPlaying)
             {
-                audioSource.Play();
+                audioSource.PlayOneShot(thrustSFX);
             }
         }
         else
         {
             audioSource.Stop();
         }
+    }
+
+    // Play the collision sfx.
+    public void PlayCollisionSFX()
+    {
+        audioSource.PlayOneShot(collisionSFX);
+    }
+
+    // Play the level finish sfx.
+    public void PlayFinishSFX()
+    {
+        audioSource.PlayOneShot(levelFinishSFX);
     }
 }

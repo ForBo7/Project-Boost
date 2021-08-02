@@ -568,10 +568,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rocket
       objectReference: {fileID: 0}
-    - target: {fileID: 6661519927088925416, guid: e968b33878ac64cc2880746ad580de96, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
     - target: {fileID: 6661519927088925420, guid: e968b33878ac64cc2880746ad580de96, type: 3}
       propertyPath: m_RootOrder
       value: 5

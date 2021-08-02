@@ -8,6 +8,10 @@ public class CollisionHandler : MonoBehaviour
 {
     SceneLoader sceneLoader = null;
     Movement movement = null;
+    RocketAudio rocketAudio = null;
+
+    bool hasCollided = false;
+    bool hasFinished = false;
 
     // Start is called before the first frame update.
     private void Start()
@@ -20,6 +24,8 @@ public class CollisionHandler : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Finish"))
         {
+            hasFinished = true;
+            rocketAudio.PlayFinishSFX();
             movement.DisableMovement();
             movement.FreezePositionAndRotation();
             Invoke("LoadNextScene", sceneLoader.GetNextLevelDelay());
@@ -30,6 +36,8 @@ public class CollisionHandler : MonoBehaviour
         }
         else
         {
+            hasCollided = true;
+            rocketAudio.PlayCollisionSFX();
             movement.DisableMovement();
             Invoke("ReloadScene", sceneLoader.GetNextLevelDelay());
         }
@@ -40,6 +48,7 @@ public class CollisionHandler : MonoBehaviour
     {
         sceneLoader = GameObject.Find("Level Manager").GetComponent<SceneLoader>();
         movement = GetComponent<Movement>();
+        rocketAudio = GetComponent<RocketAudio>();
     }
 
     // Call the method that loads the next scene.
@@ -52,5 +61,17 @@ public class CollisionHandler : MonoBehaviour
     private void ReloadScene()
     {
         sceneLoader.ReloadScene();
+    }
+
+    // Returns whether the rocket has collided.
+    public bool GetHasCollided()
+    {
+        return hasCollided;
+    }
+
+    // Returns whether the rocket has reached the finish pad.
+    public bool GetHasFinished()
+    {
+        return hasFinished;
     }
 }

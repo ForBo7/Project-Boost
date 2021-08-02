@@ -12,6 +12,8 @@ public class Movement : MonoBehaviour
     Rigidbody rb;
     Vector3 eulerAngleVelocity;
 
+    RocketAudio rocketAudio;
+
     bool wPressed = false;
     bool aPressed = false;
     bool dPressed = false;
@@ -40,6 +42,7 @@ public class Movement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         eulerAngleVelocity = new Vector3(0, 0, rotationFactor);
+        rocketAudio = GetComponent<RocketAudio>();
     }
 
     // Identify which required keys have been pressed.
@@ -53,6 +56,7 @@ public class Movement : MonoBehaviour
     // Thrust the rocket.
     void ThrustRocket()
     {
+        rocketAudio.PlayThrustSFX(wPressed);
         if (wPressed)
         {
             rb.AddRelativeForce(Vector3.up * thrustFactor);
@@ -88,6 +92,12 @@ public class Movement : MonoBehaviour
         rb.constraints = RigidbodyConstraints.FreezeRotationX |
                          RigidbodyConstraints.FreezeRotationY |
                          RigidbodyConstraints.FreezePositionZ;
+    }
+
+    // Returns whether w has been pressed.
+    public bool GetWPressed()
+    {
+        return wPressed;
     }
 
     // Disable movement for this rocket by disabling the script.

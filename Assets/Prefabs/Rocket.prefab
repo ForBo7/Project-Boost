@@ -240,6 +240,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74cfb000f293f46aea84cdfed02657c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thrustSFX: {fileID: 8300000, guid: 8a1bc6d4ec1db46d5a2a7813f92b7bd4, type: 3}
+  collisionSFX: {fileID: 8300000, guid: d0e9150d24a9240f88d77af1264479ba, type: 3}
+  levelFinishSFX: {fileID: 8300000, guid: a05c6f96d74e3483e889a2538397dfc9, type: 3}
 --- !u!114 &8880474767023842024
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -252,4 +255,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13a7e994dbe3d403ca99a2bcddfa2cf9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextLevelDelay: 1.5
