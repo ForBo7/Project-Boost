@@ -9,6 +9,7 @@ public class CollisionHandler : MonoBehaviour
     SceneLoader sceneLoader = null;
     Movement movement = null;
     RocketAudio rocketAudio = null;
+    ParticleHandler particleHandler = null;
 
     bool transitioning = false;
 
@@ -43,6 +44,7 @@ public class CollisionHandler : MonoBehaviour
     // The sequence of steps to execute upon collision.
     private void ExecuteCollisionSequence()
     {
+        particleHandler.PlayCollisionFX();
         rocketAudio.PlayCollisionSFX();
         movement.DisableMovement();
         transitioning = true;
@@ -52,6 +54,7 @@ public class CollisionHandler : MonoBehaviour
     // The sequence of steps to execute upon finishing.
     private void ExecuteFinishSequence()
     {
+        particleHandler.PlaySuccessFX();
         rocketAudio.PlayFinishSFX();
         movement.DisableMovement();
         movement.FreezePositionAndRotation();
@@ -65,6 +68,7 @@ public class CollisionHandler : MonoBehaviour
         sceneLoader = GameObject.Find("Level Manager").GetComponent<SceneLoader>();
         movement = GetComponent<Movement>();
         rocketAudio = GetComponent<RocketAudio>();
+        particleHandler = GetComponent<ParticleHandler>();
     }
 
     // Call the method that loads the next scene.
