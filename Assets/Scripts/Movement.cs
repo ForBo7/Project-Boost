@@ -9,10 +9,11 @@ public class Movement : MonoBehaviour
     [SerializeField] float thrustFactor = 0;
     [SerializeField] float rotationFactor = 0;
 
-    Rigidbody rb;
     Vector3 eulerAngleVelocity;
 
-    RocketAudio rocketAudio;
+    Rigidbody rb = null;
+    RocketAudio rocketAudio = null;
+    ParticleHandler particleHandler = null;
 
     bool wPressed = false;
     bool aPressed = false;
@@ -43,6 +44,7 @@ public class Movement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         eulerAngleVelocity = new Vector3(0, 0, rotationFactor);
         rocketAudio = GetComponent<RocketAudio>();
+        particleHandler = GetComponent<ParticleHandler>();
     }
 
     // Identify which required keys have been pressed.
@@ -59,7 +61,12 @@ public class Movement : MonoBehaviour
         rocketAudio.PlayThrustSFX(wPressed);
         if (wPressed)
         {
+            particleHandler.PlayThrustFX();
             rb.AddRelativeForce(Vector3.up * thrustFactor);
+        }
+        else
+        {
+            particleHandler.StopThrustFX();
         }
     }
 
@@ -69,11 +76,22 @@ public class Movement : MonoBehaviour
         // && used so cannot rotate in both directions at the same time.
         if (aPressed && !dPressed)
         {
+            particleHandler.PlayLeftThrustFX();
             ApplyRotation(1);
         }
+        else if (!aPressed)
+        {
+            particleHandler.StopLeftThrustFX();
+        }
+
         if (dPressed && !aPressed)
         {
+            particleHandler.PlayRightThrustFX();
             ApplyRotation(-1);
+        }
+        else if (!dPressed)
+        {
+            particleHandler.StopRightThrustFX();
         }
     }
 

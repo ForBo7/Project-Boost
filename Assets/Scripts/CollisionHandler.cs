@@ -46,6 +46,7 @@ public class CollisionHandler : MonoBehaviour
     {
         // Stop the thrust sfx.
         rocketAudio.StopAudio();
+        particleHandler.StopAllThrustFX();
         particleHandler.PlayCollisionFX();
         rocketAudio.PlayCollisionSFX();
         movement.DisableMovement();
@@ -58,6 +59,7 @@ public class CollisionHandler : MonoBehaviour
     {
         // Stop the thrust sfx.
         rocketAudio.StopAudio();
+        particleHandler.StopAllThrustFX();
         particleHandler.PlaySuccessFX();
         rocketAudio.PlayFinishSFX();
         movement.DisableMovement();
