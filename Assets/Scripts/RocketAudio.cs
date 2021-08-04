@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class RocketAudio : MonoBehaviour
 {
-    // TODO Make the collision handler call the methods to play the collision and finish sfx.
-    // TODO Make the movement script call the methods to play the thrust sfx.
     [SerializeField] AudioClip thrustSFX;
     [SerializeField] AudioClip collisionSFX;
     [SerializeField] AudioClip levelFinishSFX;
@@ -43,6 +41,12 @@ public class RocketAudio : MonoBehaviour
         {
             audioSource.Stop();
         }
+    }
+
+    // Stop audio.
+    public void StopAudio()
+    {
+        audioSource.Stop();
     }
 
     // Play the collision sfx.

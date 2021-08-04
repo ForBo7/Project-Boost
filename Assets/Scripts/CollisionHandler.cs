@@ -44,6 +44,8 @@ public class CollisionHandler : MonoBehaviour
     // The sequence of steps to execute upon collision.
     private void ExecuteCollisionSequence()
     {
+        // Stop the thrust sfx.
+        rocketAudio.StopAudio();
         particleHandler.PlayCollisionFX();
         rocketAudio.PlayCollisionSFX();
         movement.DisableMovement();
@@ -54,6 +56,8 @@ public class CollisionHandler : MonoBehaviour
     // The sequence of steps to execute upon finishing.
     private void ExecuteFinishSequence()
     {
+        // Stop the thrust sfx.
+        rocketAudio.StopAudio();
         particleHandler.PlaySuccessFX();
         rocketAudio.PlayFinishSFX();
         movement.DisableMovement();
