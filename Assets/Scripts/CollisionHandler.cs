@@ -6,12 +6,19 @@ using UnityEngine.SceneManagement;
 // Handles the collisions of the rocket and calls the appropriate methods.
 public class CollisionHandler : MonoBehaviour
 {
-    SceneLoader sceneLoader = null;
-    Movement movement = null;
-    RocketAudio rocketAudio = null;
-    ParticleHandler particleHandler = null;
+    private SceneLoader sceneLoader = null;
+    private Movement movement = null;
+    private RocketAudio rocketAudio = null;
+    private ParticleHandler particleHandler = null;
 
-    bool transitioning = false;
+    private bool transitioning = false;
+    private bool collisionsEnabled = true;
+
+    // Toggles collisionsEnabled.
+    public void ToggleCollisionsEnabled()
+    {
+        collisionsEnabled = !collisionsEnabled;
+    }
 
     // Start is called before the first frame update.
     private void Start()
@@ -22,7 +29,7 @@ public class CollisionHandler : MonoBehaviour
     // Handles the collisions of the rocket.
     private void OnCollisionEnter(Collision collision)
     {
-        if (transitioning)
+        if (transitioning || !collisionsEnabled)
         {
             return;
         }
@@ -39,6 +46,15 @@ public class CollisionHandler : MonoBehaviour
         {
             ExecuteCollisionSequence();
         }
+    }
+
+    // Initialize the required components.
+    private void InitializeComponents()
+    {
+        sceneLoader = GameObject.Find("Level Manager").GetComponent<SceneLoader>();
+        movement = GetComponent<Movement>();
+        rocketAudio = GetComponent<RocketAudio>();
+        particleHandler = GetComponent<ParticleHandler>();
     }
 
     // The sequence of steps to execute upon collision.
@@ -68,14 +84,6 @@ public class CollisionHandler : MonoBehaviour
         Invoke("LoadNextScene", sceneLoader.GetNextLevelDelay());
     }
 
-    // Initialize the required components.
-    private void InitializeComponents()
-    {
-        sceneLoader = GameObject.Find("Level Manager").GetComponent<SceneLoader>();
-        movement = GetComponent<Movement>();
-        rocketAudio = GetComponent<RocketAudio>();
-        particleHandler = GetComponent<ParticleHandler>();
-    }
 
     // Call the method that loads the next scene.
     private void LoadNextScene()
