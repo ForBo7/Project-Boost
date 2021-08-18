@@ -3053,8 +3053,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a4174e30da5a41e1af0e1455a68aa77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thrustFactor: 35
-  rotationFactor: 5
+  thrustFactor: 30
+  rotationFactor: 4
 --- !u!114 &312494629
 MonoBehaviour:
   m_ObjectHideFlags: 0
