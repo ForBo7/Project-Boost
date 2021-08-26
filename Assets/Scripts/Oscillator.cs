@@ -5,19 +5,19 @@ using UnityEngine;
 // Oscillates an object back and forth between two positions.
 public class Oscillator : MonoBehaviour
 {
-    enum Wave { Sine, Cosine };
-    [SerializeField] Vector3 finalPosition;
-    [SerializeField] float period = 0;
-    [SerializeField] Wave wave = Wave.Sine;
+    private enum Wave { Sine, Cosine };
+    [SerializeField] private Vector3 finalPosition;
+    [SerializeField] private float period = 0;
+    [SerializeField] private Wave wave = Wave.Sine;
 
-    const float tau = Mathf.PI * 2;
-    Vector3 startingPosition;
-    Vector3 movementThisFrame;
-    float movementFactor = 0;
+    private const float tau = Mathf.PI * 2;
+    private Vector3 startingPosition;
+    private Vector3 movementThisFrame;
+    private float movementFactor = 0;
     // The number of cycles that have lapsed since the scene has loaded.
-    float cycles = 0;
-    float sineWave = 0;
-    float cosineWave = 0;
+    private float cycles = 0;
+    private float sineWave = 0;
+    private float cosineWave = 0;
 
     // Start is called before the first frame update
     private void Start()
