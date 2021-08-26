@@ -7,7 +7,7 @@ public class Oscillator : MonoBehaviour
 {
     private enum Wave { Sine, Cosine };
     [SerializeField] private Vector3 finalPosition;
-    [SerializeField] private float period = 0;
+    [SerializeField] private float period = 0f;
     [SerializeField] private Wave wave = Wave.Sine;
 
     private const float tau = Mathf.PI * 2;
@@ -43,22 +43,24 @@ public class Oscillator : MonoBehaviour
     // Calculates the value for movementFactor with the use of a sine wave.
     private void CalculateSineMovementFactor()
     {
+        if (period == Mathf.Epsilon) { return; }
         // Continuously grows.
         cycles = Time.time / period;
         // Gives a value between -1 and 1.
         sineWave = Mathf.Sin(cycles * tau);
         // Adjust the sineWave value so it goes between 0 and 1.
-        movementFactor = (sineWave + 1) / 2;
+        movementFactor = (sineWave + 1f) / 2f;
     }
 
     // Calculates the value for movementFactor with the use of a cosine wave.
     private void CalculateCosineMovementFactor()
     {
+        if (period == Mathf.Epsilon) { return; }
         // Continuously grows.
         cycles = Time.time / period;
         // Gives a value between -1 and 1.
         cosineWave = Mathf.Cos(cycles * tau);
         // Adjust the sineWave value so it goes between 0 and 1.
-        movementFactor = (cosineWave + 1) / 2;
+        movementFactor = (cosineWave + 1f) / 2f;
     }
 }
