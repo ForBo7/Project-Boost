@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 296400967}
   - component: {fileID: 296400966}
   - component: {fileID: 296400965}
+  - component: {fileID: 296400969}
   m_Layer: 0
   m_Name: Obstacle (1)
   m_TagString: Untagged
@@ -219,6 +220,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &296400969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 296400964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b42d8c9145ed143618de3c40b9e68b59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  finalPosition: {x: 10, y: 0, z: 0}
+  period: 2
+  wave: 0
 --- !u!1001 &555881906
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -464,6 +480,7 @@ GameObject:
   - component: {fileID: 1283775887}
   - component: {fileID: 1283775886}
   - component: {fileID: 1283775885}
+  - component: {fileID: 1283775889}
   m_Layer: 0
   m_Name: Obstacle
   m_TagString: Untagged
@@ -548,6 +565,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1283775889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1283775884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b42d8c9145ed143618de3c40b9e68b59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  finalPosition: {x: 10, y: 0, z: 0}
+  period: 2
+  wave: 1
 --- !u!1001 &1729983532
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -569,7 +601,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6661519927088925420, guid: e968b33878ac64cc2880746ad580de96, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.15
+      value: 3.49
       objectReference: {fileID: 0}
     - target: {fileID: 6661519927088925420, guid: e968b33878ac64cc2880746ad580de96, type: 3}
       propertyPath: m_LocalPosition.z
