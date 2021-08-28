@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// TODO make level 3's gravity stronger
+
+// Manages the loading of scenes in the game.
 public class SceneLoader : MonoBehaviour
 {
     [SerializeField] float nextLevelDelay = 0f;
