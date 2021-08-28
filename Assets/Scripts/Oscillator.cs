@@ -28,7 +28,11 @@ public class Oscillator : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (wave == Wave.Sine)
+        if (period <= Mathf.Epsilon)
+        {
+            return;
+        }
+        else if (wave == Wave.Sine)
         {
             CalculateSineMovementFactor();
         }
@@ -43,7 +47,6 @@ public class Oscillator : MonoBehaviour
     // Calculates the value for movementFactor with the use of a sine wave.
     private void CalculateSineMovementFactor()
     {
-        if (period == Mathf.Epsilon) { return; }
         // Continuously grows.
         cycles = Time.time / period;
         // Gives a value between -1 and 1.
@@ -55,7 +58,6 @@ public class Oscillator : MonoBehaviour
     // Calculates the value for movementFactor with the use of a cosine wave.
     private void CalculateCosineMovementFactor()
     {
-        if (period == Mathf.Epsilon) { return; }
         // Continuously grows.
         cycles = Time.time / period;
         // Gives a value between -1 and 1.
